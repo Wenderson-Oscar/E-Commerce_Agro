@@ -184,12 +184,9 @@ class Register extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.1376318932 * fem),
                         ),
                         child: TextButton(
-                          onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Login()),
-                                    );
-                                  },
+                             onPressed: () {
+                          Navigator.pop(context);
+                        },
                           child: Container(
                             width: double.infinity,
                             height: double.infinity,

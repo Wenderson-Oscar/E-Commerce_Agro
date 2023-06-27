@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/controller/menu.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:myapp/page/registerproduct.dart';
+
 
 class ListProductsSell extends StatelessWidget {
   @override
@@ -166,6 +167,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 
+  void navigateToRegisterProduct() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterProduct()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,48 +197,64 @@ class _ProductListScreenState extends State<ProductListScreen> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: filteredProducts.length,
-              itemBuilder: (context, index) {
-                Product product = filteredProducts[index];
-                return GestureDetector(
-                  onTap: () {
-                    showProductDetails(product);
-                  },
-                  child: Card(
+            child: filteredProducts.isEmpty
+                ? Center(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Image.network(
-                            product.imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                product.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text('R\$${product.price.toStringAsFixed(2)}'),
-                            ],
-                          ),
+                        Text('Nenhum produto cadastrado'),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: navigateToRegisterProduct,
+                          child: Text('Cadastrar Produto'),
                         ),
                       ],
                     ),
+                  )
+                : GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      Product product = filteredProducts[index];
+                      return GestureDetector(
+                        onTap: () {
+                          showProductDetails(product);
+                        },
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Image.network(
+                                  product.imageUrl,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      'R\$${product.price.toStringAsFixed(2)}',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

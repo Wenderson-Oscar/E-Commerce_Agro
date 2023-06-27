@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/page/listing.dart';
 import 'package:myapp/controller/menu.dart';
+import 'package:myapp/page/perfil.dart';
 
 class RegisterAccount extends StatelessWidget {
   @override
@@ -152,7 +152,7 @@ class RegisterAccount extends StatelessWidget {
                         onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => ListerProducts()),
+                                      MaterialPageRoute(builder: (context) => UserProfile()),
                                     );
                                   },
                         child: Container(

@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/page/listing.dart';
 import 'package:myapp/page/listingproducts.dart';
 import 'package:myapp/page/login.dart';
-import 'package:myapp/page/registerperfil.dart';
+import 'package:myapp/page/perfil.dart';
 import 'package:myapp/page/registerproduct.dart';
 
 class MenuDrawer extends StatelessWidget {
+  const MenuDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Color(0xff148a8a),
             ),
@@ -25,16 +28,16 @@ class MenuDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Perfil'),
+            title: const Text('Perfil'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RegisterAccount()),
+                MaterialPageRoute(builder: (context) => UserProfile()),
               );
             },
           ),
           ListTile(
-            title: Text('Listar Produtos'),
+            title: const Text('Listar Produtos'),
             onTap: () {
               Navigator.push(
                 context,
@@ -43,7 +46,7 @@ class MenuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Listar meus Produtos'),
+            title: const Text('Listar meus Produtos'),
             onTap: () {
               Navigator.push(
                 context,
@@ -52,7 +55,7 @@ class MenuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Cadastrar Produtos'),
+            title: const Text('Cadastrar Produtos'),
             onTap: () {
               Navigator.push(
                 context,
@@ -61,23 +64,20 @@ class MenuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Sobre'),
+            title: const Text('Sobre'),
             onTap: () async {
               await showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return SystemInfoPopup();
+                  return const SystemInfoPopup();
                 },
               );
             },
           ),
-          ListTile(
+           ListTile(
             title: Text('Sair'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Login()),
-              );
+              SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
             },
           ),
         ],
@@ -87,14 +87,16 @@ class MenuDrawer extends StatelessWidget {
 }
 
 class SystemInfoPopup extends StatelessWidget {
+  const SystemInfoPopup({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Sobre o Sistema'),
+      title: const Text('Sobre o Sistema'),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: const [
           Text('Versão: 1.0.0'),
           SizedBox(height: 10),
           Text('Desenvolvido por: Wenderson Oscar'),
@@ -107,7 +109,7 @@ class SystemInfoPopup extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Fechar'),
+          child: const Text('Fechar'),
         ),
       ],
     );
