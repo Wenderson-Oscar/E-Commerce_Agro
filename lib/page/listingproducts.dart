@@ -26,7 +26,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 1',
       price: 10.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 1',
       sellerEmail: 'vendedor1@example.com',
@@ -35,7 +35,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 2',
       price: 19.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 2',
       sellerEmail: 'vendedor2@example.com',
@@ -44,7 +44,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 3',
       price: 5.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 3',
       sellerEmail: 'vendedor3@example.com',

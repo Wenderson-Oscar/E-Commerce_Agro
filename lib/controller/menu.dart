@@ -77,8 +77,11 @@ class MenuDrawer extends StatelessWidget {
            ListTile(
             title: Text('Sair'),
             onTap: () {
-              SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
-            },
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Login()),
+              );
+            }
           ),
         ],
       ),

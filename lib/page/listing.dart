@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:myapp/page/listingproducts.dart';
 import 'package:myapp/page/login.dart';
 import 'package:myapp/controller/menu.dart';
-import 'package:myapp/page/registerperfil.dart';
 import 'package:myapp/page/registerproduct.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,7 +10,7 @@ class ListerProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Product List',
+      title: 'Lista de Produto',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
@@ -30,7 +29,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 1',
       price: 10.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 1',
       sellerEmail: 'vendedor1@example.com',
@@ -39,7 +38,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 2',
       price: 19.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 2',
       sellerEmail: 'vendedor2@example.com',
@@ -48,7 +47,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     Product(
       name: 'Produto 3',
       price: 5.99,
-      imageUrl: 'assets/page-1/images/repolho.jpg',
+      imageUrl: 'assets/page/images/repolho.jpg',
       description: 'descrição do produto.',
       sellerName: 'Vendedor 3',
       sellerEmail: 'vendedor3@example.com',

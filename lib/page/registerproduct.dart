@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myapp/page/listing.dart';
 import 'package:myapp/controller/menu.dart';
@@ -42,11 +41,6 @@ class _RegisterProductState extends State<RegisterProduct> {
         ),
         title: Text(
           'Cadastro de produtos',
-          style: GoogleFonts.inter(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Color(0xff215426),
-          ),
         ),
       ),
       drawer: MenuDrawer(),
@@ -69,12 +63,12 @@ class _RegisterProductState extends State<RegisterProduct> {
                         child: Text(
                           'Cadastrar Produto',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            fontSize: 44 * ffem,
-                            fontWeight: FontWeight.w700,
-                            height: 1.2125 * ffem / fem,
-                            color: Color(0xff215426),
-                          ),
+                           style: TextStyle(
+                      fontSize: 48 * ffem,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2125 * ffem / fem,
+                      color: const Color(0xdd003a06),
+                    ),
                         ),
                       ),
                    Container(
@@ -125,13 +119,7 @@ class _RegisterProductState extends State<RegisterProduct> {
                                 10 * fem, 10 * fem, 10 * fem, 9 * fem),
                             hintText: 'Nome do produto',
                             hintStyle: TextStyle(color: Color(0xb2000000)),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontSize: 15 * ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2125 * ffem / fem,
-                            color: Color(0xff000000),
-                          ),
+                          )
                         ),
                       ),
                       Container(
@@ -151,13 +139,7 @@ class _RegisterProductState extends State<RegisterProduct> {
                                 10 * fem, 10 * fem, 10 * fem, 9 * fem),
                             hintText: 'descrição',
                             hintStyle: TextStyle(color: Color(0xb2000000)),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontSize: 15 * ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2125 * ffem / fem,
-                            color: Color(0xff000000),
-                          ),
+                          )
                         ),
                       ),
                     ],
@@ -189,13 +171,7 @@ class _RegisterProductState extends State<RegisterProduct> {
                                 10 * fem, 10 * fem, 10 * fem, 9 * fem),
                             hintText: 'Valor: 00,00',
                             hintStyle: TextStyle(color: Color(0xb2000000)),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontSize: 15 * ffem,
-                            fontWeight: FontWeight.w500,
-                            height: 1.2125 * ffem / fem,
-                            color: Color(0xff000000),
-                          ),
+                          )
                         ),
                       ),
                       Container(
@@ -233,12 +209,12 @@ class _RegisterProductState extends State<RegisterProduct> {
                           child: Text(
                             'Cadastrar',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                              fontSize: 14 * ffem,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5 * ffem / fem,
-                              color: Color(0xfff3f3f3),
-                            ),
+                              style: TextStyle(
+                                  fontSize: 14 * ffem,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5 * ffem / fem,
+                                  color: const Color(0xfff3f3f3),
+                                ),
                           ),
                         ),
                       ),
