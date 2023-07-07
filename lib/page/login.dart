@@ -1,9 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/page/listing.dart';
 import 'package:myapp/page/register.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+
 
 class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+
+  Future<void> realizarLogin(BuildContext context) async {
+    final email = emailController.text;
+    final senha = senhaController.text;
+
+    final url = Uri.parse('http://10.8.30.139:8000/login/');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email.toString(),
+        'password': senha.toString()
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Login bem-sucedido, redirecione para a próxima tela
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ListerProducts()),
+      );
+    } else {
+      // Login falhou, exiba uma mensagem de erro
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Falha ao fazer login. Tente novamente.'),
+        ),
+      );
+    }
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +116,7 @@ class Login extends StatelessWidget {
                         width: double.infinity,
                         child: TextField(
                           obscureText: false,
+                          controller: emailController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -126,6 +165,7 @@ class Login extends StatelessWidget {
                         width: double.infinity,
                         child: TextField(
                           obscureText: true,
+                          controller: senhaController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
@@ -173,12 +213,7 @@ class Login extends StatelessWidget {
                         ),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ListerProducts(),
-                              ),
-                            );
+                            realizarLogin(context);
                           },
                           child: Container(
                             width: 329.23 * fem,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/controller/menu.dart';
-import 'package:myapp/page/registerperfil.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -80,23 +79,6 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                   ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterAccount()),
-                      );
-                    },
-                    child: Icon(Icons.add),
-                  ),
                 ),
               ),
             ),
