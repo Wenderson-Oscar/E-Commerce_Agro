@@ -40,7 +40,10 @@ dependencies:
   image_picker: ^0.8.7+1
   sqflite: ^2.0.3+1
   path_provider: ^2.0.15
+<<<<<<< HEAD
   http: ^0.13.3
+=======
+>>>>>>> 046f04f0e59cfb7c9924a4c535281b9528c2bc81
 
 dev_dependencies:
   flutter_test:
