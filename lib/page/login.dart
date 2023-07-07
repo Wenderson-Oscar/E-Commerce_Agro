@@ -10,16 +10,22 @@ import 'package:http/http.dart' as http;
 class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
+  
 
   Future<void> realizarLogin(BuildContext context) async {
     final email = emailController.text;
     final senha = senhaController.text;
+    final usernamePassword = '$email:$senha';
+    final basicAuth = 'Basic ' + base64Encode(utf8.encode(usernamePassword));
 
     final url = Uri.parse('http://10.8.30.139:8000/login/');
 
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth,
+        },
       body: jsonEncode({
         'email': email.toString(),
         'password': senha.toString()
