@@ -1,6 +1,24 @@
-# test
+# E-commerce Agro
 
 A new Flutter project.
+
+**Exibição da aplicação**
+
+<img src='img_readme/login.png'>
+<img src='img_readme/register_user.png'>
+<img src='img_readme/register_user1.png'>
+<img src='img_readme/list_product.png'>
+<img src='img_readme/detail_product.png'>
+<img src='img_readme/search_product.png'>
+<img src='img_readme/list_my_product.png'>
+<img src='img_readme/detail_my_product.png.png'>
+<img src='img_readme/del_my_product.png'>
+<img src='img_readme/detail_my_product1.png'>
+<img src='img_readme/register_product.png'>
+<img src='img_readme/register_product1.png'>
+<img src='img_readme/list_product2.png'>
+<img src='img_readme/del_my_product.png'>
+<img src='img_readme/sobre.png'>
 
 ## Getting Started
 
