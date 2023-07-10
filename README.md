@@ -4,9 +4,7 @@ Este é um aplicativo `mobile desenvolvido em Flutter`, com o objetivo de conect
 
 ## Demonstração em Vídeo
 
-[Demonstração em Vídeo](https://drive.google.com/file/d/1ux4afBfVzdPsYQUhPAnE1sqjJW7o0m8M/view?usp=sharing)
-
-Clique na imagem acima para assistir à `demonstração em vídeo`.
+[Demonstração em Vídeo](https://drive.google.com/file/d/19pfODdaAfRErWHc_X1xkEqWjtrUVWnIf/view?usp=sharing)
 
 ## Exibição da aplicação
 
