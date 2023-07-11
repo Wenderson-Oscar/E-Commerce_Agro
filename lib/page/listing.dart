@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/page/listingproducts.dart';
-import 'package:myapp/page/login.dart';
 import 'package:myapp/controller/menu.dart';
-import 'package:myapp/page/registerproduct.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ListerProducts extends StatelessWidget {
   @override
@@ -25,51 +24,37 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  List<Product> products = [
-    Product(
-      name: 'Produto 1',
-      price: 10.99,
-      imageUrl: 'assets/page/images/repolho.jpg',
-      description: 'descrição do produto.',
-      sellerName: 'Vendedor 1',
-      sellerEmail: 'vendedor1@example.com',
-      sellerPhone: '+55123456789',
-    ),
-    Product(
-      name: 'Produto 2',
-      price: 19.99,
-      imageUrl: 'assets/page/images/repolho.jpg',
-      description: 'descrição do produto.',
-      sellerName: 'Vendedor 2',
-      sellerEmail: 'vendedor2@example.com',
-      sellerPhone: '+55987654321',
-    ),
-    Product(
-      name: 'Produto 3',
-      price: 5.99,
-      imageUrl: 'assets/page/images/repolho.jpg',
-      description: 'descrição do produto.',
-      sellerName: 'Vendedor 3',
-      sellerEmail: 'vendedor3@example.com',
-      sellerPhone: '+55456789123',
-    ),
-    // Add more products as needed
-  ];
-
+  bool isLoading = true;
+  List<Product> products = [];
   List<Product> filteredProducts = [];
-
   TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    filteredProducts = products;
+    fetchProducts();
   }
 
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+  Future<void> fetchProducts() async {
+    final url = Uri.parse('http://10.8.30.139:8000/list_product/');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = jsonDecode(response.body);
+      final List<Product> fetchedProducts =
+          responseData.map((data) => Product.fromJson(data)).toList();
+
+      setState(() {
+        products = fetchedProducts;
+        filteredProducts = products;
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      _showSnackBar(context, 'Erro ao carregar os produtos');
+    }
   }
 
   void filterProducts(String query) {
@@ -130,6 +115,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       },
     );
   }
+
   void launchWhatsApp(String phone) async {
     final whatsappUrl = "https://web.whatsapp.com/$phone";
     if (await canLaunch(whatsappUrl)) {
@@ -139,6 +125,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
     }
   }
 
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,70 +138,72 @@ class _ProductListScreenState extends State<ProductListScreen> {
         title: Text('Lista de Produtos'),
       ),
       drawer: MenuDrawer(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              onChanged: filterProducts,
-              decoration: InputDecoration(
-                labelText: 'Pesquisar Produtos',
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: filteredProducts.length,
-              itemBuilder: (context, index) {
-                Product product = filteredProducts[index];
-                return GestureDetector(
-                  onTap: () {
-                    showProductDetails(product);
-                  },
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Image.network(
-                            product.imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: searchController,
+                    onChanged: filterProducts,
+                    decoration: InputDecoration(
+                      labelText: 'Pesquisar Produtos',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      Product product = filteredProducts[index];
+                      return GestureDetector(
+                        onTap: () {
+                          showProductDetails(product);
+                        },
+                        child: Card(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                product.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Image.network(
+                                  product.imageUrl,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              Text('R\$${product.price.toStringAsFixed(2)}'),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                        'R\$${product.price.toStringAsFixed(2)}'),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
 
-// EXEMPLO DE DADOS
 class Product {
   final String name;
   final double price;
@@ -228,4 +222,16 @@ class Product {
     required this.sellerEmail,
     required this.sellerPhone,
   });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      name: json['name'],
+      price: json['value'].toDouble(),
+      imageUrl: json['profile'],
+      description: json['description'],
+      sellerName: json['owner_name'],
+      sellerEmail: json['owner_email'],
+      sellerPhone: json['owner_phone'],
+    );
+  }
 }

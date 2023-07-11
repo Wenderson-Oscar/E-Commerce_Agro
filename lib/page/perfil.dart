@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/controller/menu.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -7,18 +8,66 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  bool isEditing = false;
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  Map<String, dynamic>? userData;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    // Inicializar os controladores com os dados existentes
-    nameController.text = 'John Doe';
-    emailController.text = 'johndoe@gmail.com';
-    phoneController.text = '(123) 456-7890';
+    fetchUserData();
+  }
+
+  void fetchUserData() async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.8.30.139:8000/get_user/1/'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          userData = data;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to fetch user data.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error'),
+          content: Text('Connection error.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -27,83 +76,58 @@ class _UserProfileState extends State<UserProfile> {
       appBar: AppBar(
         title: Text('Perfil'),
       ),
-      drawer: MenuDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CircleAvatar(
-                radius: 50.0,
-              ),
-            ),
-            SizedBox(height: 24.0),
-            Card(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : userData == null
+              ? Center(child: Text('No user data available.'))
+              : ListView(
+                  padding: EdgeInsets.all(16.0),
                   children: [
-                    buildField('Nome', nameController),
-                    buildField('E-mail', emailController),
-                    buildField('Telefone', phoneController),
+                    Center(
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        // TODO: Add user profile image here
+                        // backgroundImage: AssetImage('assets/images/profile_image.jpg'),
+                      ),
+                    ),
+                    SizedBox(height: 24.0),
+                    Text(
+                      'Name:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    Text(
+                      userData!['name'] ?? '',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                     SizedBox(height: 16.0),
-                    if (!isEditing)
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isEditing = true;
-                            });
-                          },
-                          child: Text('Editar'),
-                        ),
+                    Text(
+                      'Email:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
                       ),
-                    if (isEditing)
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              isEditing = false;
-                            });
-                            _showSnackBar(context, 'Alterado com sucesso');
-                          },
-                          child: Text('Salvar'),
-                        ),
+                    ),
+                    Text(
+                      userData!['email'] ?? '',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      'Phone:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
                       ),
+                    ),
+                    Text(
+                      userData!['phone'] ?? '',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildField(String label, TextEditingController controller) {
-    return isEditing
-        ? TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
-          )
-        : ListTile(
-            title: Text('$label: ${controller.text}'),
-          );
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
     );
   }
 }

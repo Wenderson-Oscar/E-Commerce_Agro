@@ -5,8 +5,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
-
 class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
@@ -14,16 +12,19 @@ class Login extends StatelessWidget {
   Future<void> realizarLogin(BuildContext context) async {
     final email = emailController.text;
     final senha = senhaController.text;
+    final usernamePassword = '$email:$senha';
+    final basicAuth = 'Basic ' + base64Encode(utf8.encode(usernamePassword));
 
     final url = Uri.parse('http://10.8.30.139:8000/login/');
 
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email.toString(),
-        'password': senha.toString()
-      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth,
+      },
+      body:
+          jsonEncode({'email': email.toString(), 'password': senha.toString()}),
     );
 
     if (response.statusCode == 200) {
@@ -41,7 +42,6 @@ class Login extends StatelessWidget {
       );
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +220,8 @@ class Login extends StatelessWidget {
                             height: 43.32 * fem,
                             decoration: BoxDecoration(
                               color: const Color(0xff148a8a),
-                              borderRadius: BorderRadius.circular(4.1376318932 * fem),
+                              borderRadius:
+                                  BorderRadius.circular(4.1376318932 * fem),
                             ),
                             child: Center(
                               child: Text(
@@ -275,7 +276,8 @@ class Login extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Register()),
+                                    MaterialPageRoute(
+                                        builder: (context) => Register()),
                                   );
                                 },
                                 style: TextButton.styleFrom(
