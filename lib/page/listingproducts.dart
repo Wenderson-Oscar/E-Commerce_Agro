@@ -39,6 +39,8 @@ class _ListProductsSellState extends State<ListProductsSell> {
       _showSnackBar(context, 'Erro ao carregar os produtos');
     }
   }
+}
+
 
   void filterProducts(String query) {
     setState(() {
@@ -120,6 +122,9 @@ class _ListProductsSellState extends State<ListProductsSell> {
       _showSnackBar(context, 'Erro ao excluir o produto');
     }
   }
+}
+
+
 
   void navigateToRegisterProduct() {
     Navigator.push(
