@@ -23,21 +23,20 @@ class _ListProductsSellState extends State<ListProductsSell> {
   }
 
   Future<void> fetchProducts() async {
-    final url = Uri.parse('http://10.8.30.139:8000/list_my_product/1/');
-    final response = await http.get(url);
+  final url = Uri.parse('http://10.8.30.139:8000/list_my_product/1/');
+  final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
-      final List<Product> fetchedProducts =
-          responseData.map((data) => Product.fromJson(data)).toList();
+  if (response.statusCode == 200) {
+    final List<dynamic> responseData = jsonDecode(response.body);
+    final List<Product> fetchedProducts =
+        responseData.map((data) => Product.fromJson(data)).toList();
 
-      setState(() {
-        products = fetchedProducts;
-        filteredProducts = products;
-      });
-    } else {
-      _showSnackBar(context, 'Erro ao carregar os produtos');
-    }
+    setState(() {
+      products = fetchedProducts;
+      filteredProducts = products;
+    });
+  } else {
+    _showSnackBar(context, 'Erro ao carregar os produtos');
   }
 }
 
@@ -56,71 +55,70 @@ class _ListProductsSellState extends State<ListProductsSell> {
   }
 
   void showProductDetails(Product product) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(product.name),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(product.imageUrl),
-              SizedBox(height: 10),
-              Text('Nome ${product.name}'),
-              SizedBox(height: 10),
-              Text('Preço: R\$${product.value.toStringAsFixed(2)}'),
-              SizedBox(height: 10),
-              Text('Descrição: ${product.description}'),
-              SizedBox(height: 10),
-              Text('Vendedor: ${product.sellerName}'),
-              SizedBox(height: 10),
-              Text('Email do Vendedor: ${product.sellerEmail}'),
-              SizedBox(height: 10),
-              Text('Telefone: ${product.sellerPhone}'),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  deleteProduct(product.id); // Passa o ID do produto
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.delete),
-                    SizedBox(width: 5),
-                    Text('Excluir'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          actions: [
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(product.name),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(product.imageUrl),
+            SizedBox(height: 10),
+            Text('Nome ${product.name}'),
+            SizedBox(height: 10),
+            Text('Preço: R\$${product.value.toStringAsFixed(2)}'),
+            SizedBox(height: 10),
+            Text('Descrição: ${product.description}'),
+            SizedBox(height: 10),
+            Text('Vendedor: ${product.sellerName}'),
+            SizedBox(height: 10),
+            Text('Email do Vendedor: ${product.sellerEmail}'),
+            SizedBox(height: 10),
+            Text('Telefone: ${product.sellerPhone}'),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                deleteProduct(product.id); // Passa o ID do produto
               },
-              child: Text('Fechar'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.delete),
+                  SizedBox(width: 5),
+                  Text('Excluir'),
+                ],
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Fechar'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
-  void deleteProduct(String productId) async {
-    final url = Uri.parse('http://10.8.30.139:8000/delete_product/$productId/');
-    final response = await http.delete(url);
+void deleteProduct(String productId) async {
+  final url = Uri.parse('http://10.8.30.139:8000/delete_product/$productId/');
+  final response = await http.delete(url);
 
-    if (response.statusCode == 204) {
-      setState(() {
-        products.removeWhere((product) => product.id == productId);
-        filteredProducts.removeWhere((product) => product.id == productId);
-      });
-    } else {
-      _showSnackBar(context, 'Erro ao excluir o produto');
-    }
+  if (response.statusCode == 204) {
+    setState(() {
+      products.removeWhere((product) => product.id == productId);
+      filteredProducts.removeWhere((product) => product.id == productId);
+    });
+  } else {
+    _showSnackBar(context, 'Erro ao excluir o produto');
   }
 }
 
@@ -246,16 +244,17 @@ class Product {
     required this.sellerPhone,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'].toString(),
-      name: json['name'],
-      value: json['value'].toDouble(),
-      imageUrl: json['profile'],
-      description: json['description'],
-      sellerName: json['owner_name'],
-      sellerEmail: json['owner_email'],
-      sellerPhone: json['owner_phone'],
-    );
-  }
+ factory Product.fromJson(Map<String, dynamic> json) {
+  return Product(
+    id: json['id'].toString(),
+    name: json['name'],
+    value: json['value'].toDouble(),
+    imageUrl: json['profile'],
+    description: json['description'],
+    sellerName: json['owner_name'],
+    sellerEmail: json['owner_email'],
+    sellerPhone: json['owner_phone'],
+  );
+}
+
 }
