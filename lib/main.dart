@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
-        fontFamily: 'Roboto', // Define a fonte padrão do aplicativo
+        fontFamily: 'Roboto',
         textTheme: TextTheme(
-          bodyText1: TextStyle(fontSize: 16), // Aumenta o tamanho da fonte para 16
+          bodyText1: TextStyle(fontSize: 16),
         ),
       ),
       home: Scaffold(

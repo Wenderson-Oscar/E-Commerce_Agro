@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myapp/main.dart';
 import 'package:myapp/page/listing.dart';
 import 'package:myapp/page/listingproducts.dart';
 import 'package:myapp/page/login.dart';
@@ -77,11 +78,11 @@ class MenuDrawer extends StatelessWidget {
            ListTile(
             title: Text('Sair'),
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Login()),
+                MaterialPageRoute(builder: (context) => MyApp()),
               );
-            }
+            },
           ),
         ],
       ),
