@@ -7,6 +7,9 @@ import 'package:image_picker/image_picker.dart';
 
     
 class RegisterProduct extends StatefulWidget {
+  final int userId;
+
+  RegisterProduct({required this.userId});
   @override
   _RegisterProductState createState() => _RegisterProductState();
 }
@@ -20,7 +23,7 @@ class _RegisterProductState extends State<RegisterProduct> {
   XFile? image;
 
   void createProduct() async {
-    final url = Uri.parse('http://10.8.30.139:8000/create_product/');
+    final url = Uri.parse('http://10.8.30.139:8000/create_product/${widget.userId}/');
     final request = http.MultipartRequest('POST', url);
 
     request.fields['name'] = nameController.text;

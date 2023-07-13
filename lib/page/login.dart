@@ -5,10 +5,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+
 class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
-  
+  Login({super.key});
 
   Future<void> realizarLogin(BuildContext context) async {
     final email = emailController.text;
@@ -29,13 +30,12 @@ class Login extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
-      // Login bem-sucedido, redirecione para a próxima tela
+      final userId = jsonDecode(response.body)['id']; // Obter o ID do usuário
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ListerProducts()),
+        MaterialPageRoute(builder: (context) => ListerProducts(userId: userId,)),
       );
     } else {
-      // Login falhou, exiba uma mensagem de erro
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Falha ao fazer login. Tente novamente.'),

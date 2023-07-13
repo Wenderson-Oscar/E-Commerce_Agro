@@ -6,6 +6,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ListerProducts extends StatelessWidget {
+  final int userId;
+
+  ListerProducts({required this.userId});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,12 +17,16 @@ class ListerProducts extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: ProductListScreen(),
+      home: ProductListScreen(userId: userId,),
     );
   }
 }
 
 class ProductListScreen extends StatefulWidget {
+  final int userId;
+
+  ProductListScreen({required this.userId});
+
   @override
   _ProductListScreenState createState() => _ProductListScreenState();
 }
@@ -137,7 +145,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       appBar: AppBar(
         title: Text('Lista de Produtos'),
       ),
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(userId: widget.userId),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : Column(

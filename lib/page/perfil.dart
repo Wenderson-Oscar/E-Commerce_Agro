@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserProfile extends StatefulWidget {
+  final int userId;
+
+  UserProfile({required this.userId});
   @override
   _UserProfileState createState() => _UserProfileState();
 }
@@ -25,7 +28,7 @@ class _UserProfileState extends State<UserProfile> {
   void fetchUserData() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.8.30.139:8000/get_user/1/'),
+        Uri.parse('http://10.8.30.139:8000/get_user/${widget.userId}/'),
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -77,7 +80,7 @@ class _UserProfileState extends State<UserProfile> {
   void saveChanges() async {
     try {
       final response = await http.put(
-        Uri.parse('http://10.8.30.139:8000/update_user/1/'),
+        Uri.parse('http://10.8.30.139:8000/update_user/${widget.userId}/'),
         body: {
           'name': nameController.text,
           'email': emailController.text,

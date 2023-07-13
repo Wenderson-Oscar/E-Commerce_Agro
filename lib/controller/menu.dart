@@ -8,7 +8,8 @@ import 'package:myapp/page/perfil.dart';
 import 'package:myapp/page/registerproduct.dart';
 
 class MenuDrawer extends StatelessWidget {
-  const MenuDrawer({Key? key}) : super(key: key);
+  final int userId;
+  const MenuDrawer({Key? key, required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfile()),
+                MaterialPageRoute(builder: (context) => UserProfile(userId: userId,)),
               );
             },
           ),
@@ -42,7 +43,7 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ListerProducts()),
+                MaterialPageRoute(builder: (context) => ListerProducts(userId: userId,)),
               );
             },
           ),
@@ -51,7 +52,7 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ListProductsSell()),
+                MaterialPageRoute(builder: (context) => ListProductsSell(userId: userId,)),
               );
             },
           ),
@@ -60,7 +61,7 @@ class MenuDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RegisterProduct()),
+                MaterialPageRoute(builder: (context) => RegisterProduct(userId: userId,)),
               );
             },
           ),

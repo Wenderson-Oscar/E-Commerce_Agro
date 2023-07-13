@@ -7,6 +7,10 @@ import 'dart:convert';
 import 'package:myapp/page/registerproduct.dart';
 
 class ListProductsSell extends StatefulWidget {
+  final int userId;
+
+  ListProductsSell({required this.userId});
+
   @override
   _ListProductsSellState createState() => _ListProductsSellState();
 }
@@ -23,7 +27,7 @@ class _ListProductsSellState extends State<ListProductsSell> {
   }
 
   Future<void> fetchProducts() async {
-  final url = Uri.parse('http://10.8.30.139:8000/list_my_product/1/');
+final url = Uri.parse('http://10.8.30.139:8000/list_my_product/${widget.userId}/');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -127,7 +131,7 @@ void deleteProduct(String productId) async {
   void navigateToRegisterProduct() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RegisterProduct()),
+      MaterialPageRoute(builder: (context) => RegisterProduct(userId: widget.userId,)),
     );
   }
 
@@ -143,7 +147,7 @@ void deleteProduct(String productId) async {
       appBar: AppBar(
         title: Text('Listar meus Produtos'),
       ),
-      drawer: MenuDrawer(),
+      drawer: MenuDrawer(userId: widget.userId,),
       body: Column(
         children: [
           Padding(
