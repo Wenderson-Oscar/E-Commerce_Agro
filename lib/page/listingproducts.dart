@@ -27,7 +27,7 @@ class _ListProductsSellState extends State<ListProductsSell> {
   }
 
   Future<void> fetchProducts() async {
-final url = Uri.parse('http://10.8.30.139:8000/list_my_product/${widget.userId}/');
+final url = Uri.parse('http://10.8.8.10:8000/list_my_product/${widget.userId}/');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -113,7 +113,7 @@ final url = Uri.parse('http://10.8.30.139:8000/list_my_product/${widget.userId}/
 }
 
 void deleteProduct(String productId) async {
-  final url = Uri.parse('http://10.8.30.139:8000/delete_product/$productId/');
+  final url = Uri.parse('http://10.8.8.10:8000/delete_product/$productId/');
   final response = await http.delete(url);
 
   if (response.statusCode == 204) {

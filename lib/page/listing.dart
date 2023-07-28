@@ -44,7 +44,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   Future<void> fetchProducts() async {
-    final url = Uri.parse('http://10.8.30.139:8000/list_product/');
+    final url = Uri.parse('http://10.8.8.10:8000/list_product/');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -98,7 +98,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  launchWhatsApp(product.sellerPhone);
+                  launchWhatsApp(product.sellerPhone, product.sellerName, product.description, product.price.toString());
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -124,8 +124,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 
-  void launchWhatsApp(String phone) async {
-    final whatsappUrl = "https://web.whatsapp.com/$phone";
+   Future<void> launchWhatsApp(
+      String phoneNumber, String sellerName, String description, String price) async {
+    final message =
+        "Olá, tudo bem?\nEstou interessado no seu produto:\nNome: $sellerName\nDescrição: $description\nValor: R\$$price";
+
+    final whatsappUrl = "https://wa.me/$phoneNumber/?text=${Uri.encodeComponent(message)}";
+
     if (await canLaunch(whatsappUrl)) {
       await launch(whatsappUrl);
     } else {

@@ -17,7 +17,7 @@ class Login extends StatelessWidget {
     final usernamePassword = '$email:$senha';
     final basicAuth = 'Basic ' + base64Encode(utf8.encode(usernamePassword));
 
-    final url = Uri.parse('http://10.8.30.139:8000/login/');
+    final url = Uri.parse('http://10.8.8.10:8000/login/');
 
     final response = await http.post(
       url,

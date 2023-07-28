@@ -23,7 +23,7 @@ class _RegisterProductState extends State<RegisterProduct> {
   XFile? image;
 
   void createProduct() async {
-    final url = Uri.parse('http://10.8.30.139:8000/create_product/${widget.userId}/');
+    final url = Uri.parse('http://10.8.8.10:8000/create_product/${widget.userId}/');
     final request = http.MultipartRequest('POST', url);
 
     request.fields['name'] = nameController.text;

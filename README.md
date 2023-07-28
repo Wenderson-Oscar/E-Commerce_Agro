@@ -42,9 +42,15 @@ No terminal, execute o seguinte comando para `instalar as dependências`:
 flutter pub get
 ```
 
-...
+Depois de configurar a `API` e iniciar o servidor no link acima, iremos configurar o ip no flutter
 
-Depois de configurar a `API` e iniciar o servidor no link acima, execute o seguinte comando para iniciar o aplicativo:
+vai em todos os arquivos que contem o ip, exemplo: ```Uri.parse('http://0.0.0.0:8000/login/')```
+
+modifique o `0.0.0.0` pelo ip da sua maquina
+
+Para saber o ip da sua maquina digite `ipconfig` ou `hostname -I` no terminal
+
+execute o seguinte comando para iniciar o aplicativo:
 
 ```
 flutter run -d chrome

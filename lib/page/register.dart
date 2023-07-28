@@ -28,7 +28,7 @@ class Register extends StatelessWidget {
       return;
     }
 
-    final url = Uri.parse('http://10.8.30.139:8000/create_user/');
+    final url = Uri.parse('http://10.8.8.10:8000/create_user/');
 
     final response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
