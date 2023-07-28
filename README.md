@@ -48,7 +48,7 @@ vai em todos os arquivos que contem o ip, exemplo: ```Uri.parse('http://0.0.0.0:
 
 modifique o `0.0.0.0` pelo ip da sua maquina
 
-Para saber o ip da sua maquina digite `ipconfig` ou `hostname -I` no terminal
+Para saber o ip da sua maquina digite `ifconfig` ou `hostname -I` no terminal
 
 execute o seguinte comando para iniciar o aplicativo:
 
