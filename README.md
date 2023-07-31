@@ -36,6 +36,8 @@ Iremos `clonar` o repositório:
 git clone https://github.com/Wenderson-Oscar/E-Commerce_Agro.git
 ```
 
+Dentro do projeto abra o terminal
+
 No terminal, execute o seguinte comando para `instalar as dependências`:
 
 ```
